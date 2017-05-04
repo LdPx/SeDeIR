@@ -6,7 +6,6 @@
 
 class HistogramCalculator {
 public:
-    HistogramCalculator(cv::Vec3i nbins, cv::Vec3f range);
     cv::Mat calc(cv::Mat hsv_img);
 
     cv::Mat normalize(cv::Mat hist);
