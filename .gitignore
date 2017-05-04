@@ -340,6 +340,8 @@ __pycache__/
 # Para CodeBlockx Bobs
 ##############################################################
 
+*.cbp
+
 [Bb]in/*  
 ![Bb]in/data/  
 [Bb]uild/  
