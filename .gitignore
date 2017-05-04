@@ -27,3 +27,6 @@
 *.exe
 *.out
 *.app
+
+# BAN_Data
+data/*
