@@ -7,7 +7,7 @@
 using namespace std;
 using namespace cv;
 
-void main() {
+int main(int argc, char **argv) {
 	Mat img = imread("data/dop10cir_32359_5654_1_nw-LZW.tif", CV_LOAD_IMAGE_COLOR);
 //	Mat img = imread("data/dop10cir_32359_5654_1_nw_2016.tif", CV_LOAD_IMAGE_COLOR);
 
