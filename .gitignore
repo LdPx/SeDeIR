@@ -29,4 +29,12 @@
 *.app
 
 # BAN_Data
-data/*
+data/dgm1l-ab_32359_5654_1_nw.xyz
+data/dgm1l-ag_32359_5654_1_nw.xyz
+data/dgm1l-brk_32359_5654_1_nw.xyz
+data/dgm1l-lpb_32359_5654_1_nw.xyz
+data/dgm1l-lpnb_32359_5654_1_nw.xyz
+data/dgm1l-lpub_32359_5654_1_nw.xyz
+data/dom1l-fp_32359_5654_1_nw.xyz
+data/dop10cir_32359_5654_1_nw_2016.tif
+data/dop10cir_32359_5654_1_nw-LZW.tif
