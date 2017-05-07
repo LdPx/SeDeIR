@@ -23,9 +23,21 @@ uchar ClusteringThresholder::calc_threshold(vector<double> &norm_hist) {
         }
         list<HistCluster>::iterator c1 = min_clus, c2 = next(min_clus);
         cout << "min cluster " << distance(c1, clusters.begin()) << endl;
-        c1->maxz = c2->maxz;
-        c1->p += c2->p;
-        c1->m = (c1->m + c2->m) / 2;
+        // teste m beider Cluster
+        // TODO später rausschmeißen
+        double m_ = 0;
+        for(int i = c1->minz; i <= c2->maxz; i++){
+            m_ += i * norm_hist[i];
+        }
+        m_ /= (c1->p + c2->p);
+        //c1->maxz = c2->maxz;
+        //c1->p += c2->p;
+        //c1->m = (c1->m + c2->m) / 2;
+        uchar minz = c1->minz, maxz = c2->maxz;
+        double p = c1->p + c2->p;
+        double m = M(*c1, *c2);
+        cout << "m of 2 clusters " << m << " expected " << m_ << endl;
+        *c1 =HistCluster(minz, maxz, p, m);
         clusters.erase(c2);
     }
 
