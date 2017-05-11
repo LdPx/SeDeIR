@@ -1,8 +1,13 @@
+#ifdef _MSC_VER
+#define _CRT_SECURE_NO_WARNINGS
+#endif
+
 #include <iostream>
 #include <opencv2\opencv.hpp>
 #include <queue>
 #include "include\HueConverter.h"
 #include "include\HistogramCalculator.h"
+
 
 #define FUER for
 #define WAEHREND while
@@ -15,13 +20,13 @@
 #define ENDZ endl
 #define BILDEINLESEN imread
 #define BILDZEIGEN imshow
-#define WARTETASTE waitkey
+#define WARTETASTE waitKey
 
 using namespace std;
 using namespace cv;
 
 int main(int argc, char **argv) {
-	MATRIX img = BILDEINLESEN("data/dop10cir_32359_5654_1_nw-LZW.tif", RS_LADE_BILD_FARBE);
+	MATRIX img = BILDEINLESEN("C:\\Users\\lammbraten\\Dropbox\\Master\\2.Semester\\BAN\\Praktikum\\SeDeIR\\SeDeIR\\Implemetierung\\data\\dop10cir_32359_5654_1_nw-LZW.tif", RS_LADE_BILD_FARBE);
 //	MATRIX img = BILDEINLESEN("data/dop10cir_32359_5654_1_nw_2016.tif", RS_LADE_BILD_FARBE);
 
 	CRAUS << "Image size: " << img.rows << "x" << img.cols << ENDZ;

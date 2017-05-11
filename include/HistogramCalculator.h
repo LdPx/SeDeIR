@@ -1,6 +1,11 @@
 #ifndef HISTOGRAMCALCULATOR_H
 #define HISTOGRAMCALCULATOR_H
 
+#ifdef _MSC_VER
+#define _CRT_SECURE_NO_WARNINGS
+#endif
+
+
 #include <vector>
 #include <opencv2/opencv.hpp>
 
