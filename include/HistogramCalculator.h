@@ -6,7 +6,7 @@
 
 class HistogramCalculator {
 public:
-    cv::Mat calc(cv::Mat hsv_img);
+	std::vector<double> calc(cv::Mat hsv_img);
 
     cv::Mat normalize(cv::Mat hist);
 protected:
