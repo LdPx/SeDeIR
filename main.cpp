@@ -4,25 +4,38 @@
 #include "include\HueConverter.h"
 #include "include\HistogramCalculator.h"
 
+#define FUER for
+#define WAEHREND while
+#define SCHALTER switch
+#define FALL case
+#define GANZZAHL int
+#define MATRIX Mat
+#define RS_LADE_BILD_FARBE CV_LOAD_IMAGE_COLOR
+#define CRAUS cout
+#define ENDZ endl
+#define BILDEINLESEN imread
+#define BILDZEIGEN imshow
+#define WARTETASTE waitkey
+
 using namespace std;
 using namespace cv;
 
 int main(int argc, char **argv) {
-	Mat img = imread("data/dop10cir_32359_5654_1_nw-LZW.tif", CV_LOAD_IMAGE_COLOR);
-//	Mat img = imread("data/dop10cir_32359_5654_1_nw_2016.tif", CV_LOAD_IMAGE_COLOR);
+	MATRIX img = BILDEINLESEN("data/dop10cir_32359_5654_1_nw-LZW.tif", RS_LADE_BILD_FARBE);
+//	MATRIX img = BILDEINLESEN("data/dop10cir_32359_5654_1_nw_2016.tif", RS_LADE_BILD_FARBE);
 
-	cout << "Image size: " << img.rows << "x" << img.cols << endl;
+	CRAUS << "Image size: " << img.rows << "x" << img.cols << ENDZ;
 
-	cout << "Converting to H(ue)..." << endl;
+	CRAUS << "Converting to H(ue)..." << ENDZ;
 	Mat H_img = HueConverter().convertToHOfHSV(img);
 
-	cout << "Calculation Histogram..." << endl;
+	CRAUS << "Calculation Histogram..." << ENDZ;
 	Mat hist = HistogramCalculator().calc(H_img);
-	cout << hist << endl;
+	CRAUS << hist << ENDZ;
 
 
 
 	cv::resize(H_img, H_img, Size(1000, 1000));
-	imshow("show_time!", H_img);
-	waitKey(0);
+	BILDZEIGEN("show_time!", H_img);
+	WARTETASTE(0);
 }
