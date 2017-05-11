@@ -1,12 +1,14 @@
 #ifndef HISTCLUSTER_H
 #define HISTCLUSTER_H
 
+
 #ifdef _MSC_VER
 #define _CRT_SECURE_NO_WARNINGS
 #endif
 
 
 #include <opencv2/opencv.hpp>
+
 
 class HistCluster {
 public:

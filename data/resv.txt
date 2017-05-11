@@ -1,0 +1,4 @@
+x start = 32359000
+y start = 5654000
+
+* 10 -> pixel coord
