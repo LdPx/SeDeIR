@@ -1,7 +1,3 @@
-#ifdef _MSC_VER
-#define _CRT_SECURE_NO_WARNINGS
-#endif
-
 #include <iostream>
 #include <opencv2\opencv.hpp>
 #include <queue>
@@ -11,31 +7,13 @@
 #include "include\C++DE.h"
 #include <cmath>
 
-#define FUER for
-#define WAEHREND while
-#define SCHALTER switch
-#define FALL case
-#define GANZZAHL int
-#define MATRIX Mat
-#define RS_LADE_BILD_FARBE CV_LOAD_IMAGE_COLOR
-#define CRAUS cout
-#define ENDZ endl
-#define BILDEINLESEN imread
-#define BILDZEIGEN imshow
-#define WARTETASTE waitKey
-
 #define PI 3.14159265359
 
 
 using namespace std;
 using namespace RS;
 
-int main(int argc, char **argv) {
-	MATRIX img = BILDEINLESEN("C:\\Users\\lammbraten\\Dropbox\\Master\\2.Semester\\BAN\\Praktikum\\SeDeIR\\SeDeIR\\Implemetierung\\data\\dop10cir_32359_5654_1_nw-LZW.tif", RS_LADE_BILD_FARBE);
-//	MATRIX img = BILDEINLESEN("data/dop10cir_32359_5654_1_nw_2016.tif", RS_LADE_BILD_FARBE);
-=======
 GANZZAHL HAUPT(GANZZAHL argc, KOHLE **argv) {
->>>>>>> origin/master
 
 	MATRIX img = BILDEINLESEN("data/dop10cir_32359_5654_1_nw-LZW.tif", RS_LADE_BILD_FARBE) ANWEISUNGSENDE
 //	MATRIX img = BILDEINLESEN("data/dop10cir_32359_5654_1_nw_2016.tif", RS_LADE_BILD_FARBE) ANWEISUNGSENDE
