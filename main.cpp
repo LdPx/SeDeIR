@@ -5,6 +5,8 @@
 #include "include\HistogramCalculator.h"
 #include "include\ClusteringThresholder.h"
 #include "include\C++DE.h"
+#include "include\XYZ_IO.h"
+#include "include\XYZ_Point.h"
 
 using namespace std;
 using namespace RS;
@@ -56,6 +58,25 @@ GANZZAHL HAUPT(GANZZAHL argc, KOHLE **argv) {
 
 
 
+/*
+	string infilePath = "data/dom1l-fp_32359_5654_2010_nw.xyz";
+	string outfilePath = "data/RausWolke.xyz";
+
+	vector<XYZ_Point> pc = XYZ_IO().readWithOffset(infilePath, -32359000.0, -5654000.0, 0, 10);	// read the pointcloud data and apply offset and scale
+
+	std::vector<char> labels;	// I LOVE Parallel arrays!!!
+
+	// determine whether a point belongs to the segmantated area or not
+	for (XYZ_Point p : pc) {
+		if (image @ p.x p.y p.z in segment)	// TODO
+			labels.push_back('v');
+		else
+			labels.push_back('n');
+	}
+
+	XYZ_IO().writeWithLabel(pc, labels, outfilePath);	// write the pointcloud data with the related label to a new file
+*/
+
 
 
 /*
@@ -77,12 +98,9 @@ GANZZAHL HAUPT(GANZZAHL argc, KOHLE **argv) {
 
 
 
-
-
-
 	RS::resize(H_img, H_img, Size(1000, 1000)) ANWEISUNGSENDE
 	BILDZEIGEN("show_time!", H_img) ANWEISUNGSENDE
 	WARTETASTE(0) ANWEISUNGSENDE
 
-
+	return 0;
 }

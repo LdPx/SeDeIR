@@ -1,0 +1,3 @@
+#include "XYZ_Point.h"
+
+// Ok. This may not realy be necessary...
