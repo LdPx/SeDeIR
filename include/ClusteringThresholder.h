@@ -4,6 +4,8 @@
 #include <list>
 #include "HistCluster.h"
 
+#define PI 3.14159265359
+
 class ClusteringThresholder {
 public:
     uchar calc_threshold(std::vector<double> &norm_hist);

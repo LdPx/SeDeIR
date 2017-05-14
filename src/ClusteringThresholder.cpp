@@ -1,7 +1,5 @@
 #include "../include/ClusteringThresholder.h"
 
-#define PI 3.14159265359
-
 using namespace cv;
 using namespace std;
 
@@ -78,6 +76,7 @@ double ClusteringThresholder::sigA(HistCluster c1, HistCluster c2, vector<double
 	}
 	cossum /= (c1.p + c2.p);
 	sinsum /= (c1.p + c2.p);
+	//return (1 - sqrt(pow(cossum, 2) + pow(sinsum, 2))) / (c1.p + c2.p);   ?
 	return 1 - sqrt(pow(cossum, 2) + pow(sinsum, 2)) / (c1.p + c2.p);
 }
 

@@ -4,8 +4,8 @@
 #define GLEIT float
 #define DOPPEL double
 #define HAUPT main
-#define FÜR for
-#define WÄHREND while
+#define FUER for
+#define WAEHREND while
 #define FALLS if
 #define SONST else
 #define SCHALTER switch
