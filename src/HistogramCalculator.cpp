@@ -14,18 +14,18 @@ using namespace cv;
 /* 7*/	MatND hist;
 /* 8*/	int channels[] = { 0 };
 /* 9*/	calcHist(&hsv_img, 1, channels, Mat(), hist, 1, histSize, ranges, true, false);
-/*10*/
-cout << hist.size() << endl;
-vector<double> hist_vec(hbins);
-for (int i = 0; i < hbins; i++) {
-	hist_vec[i] = hist.at<float>(0, i);
-	}
-
-/*11*/	return hist_vec;
-/*12*/	}
-/*13*/
-/*14*/	Mat HistogramCalculator::normalize(Mat hist){
-/*15*/	Mat norm_hist;
-/*16*/	cv::normalize(hist, norm_hist, 1, 0, cv::NORM_L1);
-/*17*/	return norm_hist;
-/*18*/}
+/*10*/	
+/*11*/	cout << hist.size() << endl;
+/*12*/	vector<double> hist_vec(hbins);
+/*13*/	for (int i = 0; i < hbins; i++) {
+/*14*/		hist_vec[i] = hist.at<float>(0, i);
+/*15*/	}
+/*16*/	
+/*17*/	return hist_vec;
+/*18*/	}
+/*19*/
+/*20*/	Mat HistogramCalculator::normalize(Mat hist){
+/*21*/	Mat norm_hist;
+/*22*/	cv::normalize(hist, norm_hist, 1, 0, cv::NORM_L1);
+/*23*/	return norm_hist;
+/*24*/}
