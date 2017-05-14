@@ -24,7 +24,9 @@ uchar ClusteringThresholder::calc_threshold(vector<double> &norm_hist) {
         list<HistCluster>::iterator max_c1, max_c2;
         double min_dist = numeric_limits<double>::infinity();
         for(list<HistCluster>::iterator clus = clusters.begin(); clus != clusters.end(); clus++) {
-			list<HistCluster>::iterator c1 = clus, c2 = next(c1) == clusters.end() ? clusters.begin() : next(c1);
+			list<HistCluster>::iterator c1 = clus;
+			list<HistCluster>::iterator c2 = next(c1) == clusters.end() ? clusters.begin() : next(c1);
+			//cout << "testing (" << distance(clusters.begin(),c1) << ", " << distance(clusters.begin(),c2) << ")" << endl;
             double dist = d(*c1, *c2, norm_hist);
             if(dist < min_dist) {
                 min_dist = dist;
@@ -32,7 +34,7 @@ uchar ClusteringThresholder::calc_threshold(vector<double> &norm_hist) {
 				max_c2 = c2;
             }
         }
-        cout << "min cluster " << distance(max_c1, clusters.begin()) << endl;
+        cout << "merging clusters " << distance(clusters.begin(),max_c1) << ", " << distance(clusters.begin(),max_c2) << endl;
 
         uchar minz = max_c1->minz, maxz = max_c2->maxz;
         double p = max_c1->p + max_c2->p;
@@ -60,9 +62,9 @@ double ClusteringThresholder::M(HistCluster c1, HistCluster c2) {
 }
 
 double ClusteringThresholder::sigA(HistCluster c1, HistCluster c2, vector<double> &norm_hist) {
-	double sum = 0;
 	//cout << "from " << (int)c1.minv << " to " << (int)c2.maxv << endl;
 	/*
+	double sum = 0;
 	for(int z = c1.minz; z <= c2.maxz; z++){
         //cout << (int)v << endl;
 		sum += pow(z - M(c1, c2), 2) * norm_hist[z];
