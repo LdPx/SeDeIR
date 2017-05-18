@@ -8,10 +8,10 @@ class HistogramCalculator {
 public:
 	std::vector<double> calc(cv::Mat hsv_img);
 
-    cv::Mat normalize(cv::Mat hist);
+	cv::Mat normalize(cv::Mat hist);
 protected:
-    cv::Vec3i nbins;
-    cv::Vec3f range;
+	cv::Vec3i nbins;
+	cv::Vec3f range;
 };
 
 #endif // HISTOGRAMCALCULATOR_H
