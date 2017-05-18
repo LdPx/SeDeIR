@@ -47,14 +47,14 @@ std::vector<XYZ_Point> XYZ_IO::readWithOffset(std::string path, double x_offset,
 	return pc;
 }
 
-int XYZ_IO::write(vector<XYZ_Point> pc, string path) {
+int XYZ_IO::write(vector<XYZ_Point> pc, string path, double x_offset, double y_offset, double z_offset, double xyz_revScale) {
 	int ret = 1;
 
 	ofstream outfile;
 	outfile.open(path);
 	if (outfile.good()) {
 		for (std::vector<XYZ_Point>::iterator it = pc.begin(); it != pc.end(); it++) {
-			outfile << it->x << " " << it->y << " " << it->z << endl;	// TODO: make operator<< overload great again!
+			outfile << ((it->x + x_offset) / xyz_revScale) << ";" << ((it->y + y_offset) / xyz_revScale) << ";" << ((it->z + z_offset) / xyz_revScale) << endl;	// TODO: make operator<< overload great again!
 		}
 	outfile.close();
 	}
@@ -64,7 +64,7 @@ int XYZ_IO::write(vector<XYZ_Point> pc, string path) {
 	return ret;
 }
 
-int XYZ_IO::writeWithLabel(std::vector<XYZ_Point> pc, std::vector<char> labels, std::string path) {
+int XYZ_IO::writeWithLabel(std::vector<XYZ_Point> pc, std::vector<char> labels, std::string path, double x_offset, double y_offset, double z_offset, double xyz_revScale) {
 	int ret = 1;
 
 	ofstream outfile;
@@ -73,7 +73,7 @@ int XYZ_IO::writeWithLabel(std::vector<XYZ_Point> pc, std::vector<char> labels, 
 		std::vector<XYZ_Point>::iterator it;
 		std::vector<char>::iterator itL;
 		for (it = pc.begin(), itL = labels.begin(); it != pc.end(); it++, itL++) {
-			outfile << it->x << " " << it->y << " " << it->z << " " << (*itL) << endl;	// TODO: make operator<< overload great again!
+			outfile << ((it->x + x_offset) / xyz_revScale) << ";" << ((it->y + y_offset) / xyz_revScale) << ";" << ((it->z + z_offset) / xyz_revScale) << ";" << (*itL) << endl;	// TODO: make operator<< overload great again!
 		}
 		outfile.close();
 	}
