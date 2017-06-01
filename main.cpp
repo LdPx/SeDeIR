@@ -46,13 +46,20 @@ GANZZAHL HAUPT(GANZZAHL argc, KOHLE **argv) {
 		//Mat binary_h_img;
 	threshold(H_img, binary_h_img, thr, 255, THRESH_BINARY);
 
+	/*
+	Mat dist_img;
+	resize(binary_h_img, binary_h_img, Size(1000, 1000));
+	distanceTransform(binary_h_img, dist_img, CV_DIST_L2, 3);
+	threshold(dist_img, dist_img, 10, 255, THRESH_BINARY);
 
-
-	
+	resize(dist_img, dist_img, Size(1000, 1000));
+	//normalize(dist_img, dist_img, 0.0, 1, NORM_MINMAX);
+	imshow("dist", dist_img);
+	*/
 	
 	string infilePath = "data/dom1l-fp_32359_5654_2010_nw.xyz";
 	string outfilePath = "data/RausWolke.xyz";
-
+	
 	cout << "reading points..." << endl;
 	vector<XYZ_Point> pc = XYZ_IO().readWithOffset(infilePath, -32359000.0, -5654000.0, 0, 10);	// read the pointcloud data and apply offset and scale
 	cout << "reading finished." << endl;
@@ -61,10 +68,13 @@ GANZZAHL HAUPT(GANZZAHL argc, KOHLE **argv) {
 	std::vector<XYZ_Point> labels;	// I LOVE Parallel arrays!!!
 	std::vector<XYZ_Point> remains;	// I LOVE Parallel arrays!!!
 
+	Mat binary2(img.size(), CV_8U, Scalar(0));
+
 	for (XYZ_Point p : pc) {
 		if (binary_h_img.at<uchar>(9999.99 - p.y, p.x) > 0 && p.z > 500) {
 			labelsOnly.push_back('0');		// vegetation
 			labels.push_back(p);
+			binary2.at<uchar>(9999.99 - p.y, p.x) = 255;
 		}
 		else {
 			labelsOnly.push_back('1');		// non-Vegetation
@@ -72,13 +82,25 @@ GANZZAHL HAUPT(GANZZAHL argc, KOHLE **argv) {
 		}
 	}
 
+	morphologyEx(binary2, binary2, MORPH_CLOSE, getStructuringElement(MORPH_ELLIPSE, Size(10, 10)), Point(-1,-1), 2);
+
+	//Mat markers(markerMask.size(), CV_32S, Scalar::all(0));
+	//watershed(img0, markers);
+
+	resize(binary2, binary2, Size(1000, 1000));
+	imshow("new bin", binary2);
+	waitKey();
+
+	return 0;
+
 	cout << "writing points with labels..." << endl;
 	XYZ_IO().writeWithLabel(pc, labelsOnly, outfilePath, 0, 0, 0, 10);
 	XYZ_IO().write(labels, "data/RausWolkeVegeta.xyz", 0, 0, 0, 10);	// write the pointcloud data with the related label to a new file
 	XYZ_IO().write(remains, "data/RausWolkeUrban.xyz", 0, 0, 0, 10);	// write the pointcloud data with the related label to a new file
 	cout << "writing finished." << endl;
+	
 //*/
-
+	/*
 
 	Mat rev1(img.size(), CV_8U, Scalar(0));
 	Mat rev2(img.size(), CV_8U, Scalar(0));
@@ -92,10 +114,10 @@ GANZZAHL HAUPT(GANZZAHL argc, KOHLE **argv) {
 	}
 	imwrite("RausBild1.jpg", rev1);
 	imwrite("RausBild2.jpg", rev2);
-
+	*/
 	RS::resize(binary_h_img, binary_h_img, Size(1000, 1000)) ANWEISUNGSENDE
 		BILDZEIGEN("binary_h_img", binary_h_img);
-
+		
 	/*/////
 	namedWindow("Linear Blend", 1);
 	RS::resize(H_img, H_img, Size(1000, 1000)) ANWEISUNGSENDE
