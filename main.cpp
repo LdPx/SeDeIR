@@ -7,6 +7,7 @@
 #include "include\C++DE.h"
 #include "include\XYZ_IO.h"
 #include "include\XYZ_Point.h"
+#include "include\nms.hpp"
 
 using namespace std;
 using namespace RS;
@@ -46,16 +47,8 @@ GANZZAHL HAUPT(GANZZAHL argc, KOHLE **argv) {
 		//Mat binary_h_img;
 	threshold(H_img, binary_h_img, thr, 255, THRESH_BINARY);
 
-	/*
-	Mat dist_img;
-	resize(binary_h_img, binary_h_img, Size(1000, 1000));
-	distanceTransform(binary_h_img, dist_img, CV_DIST_L2, 3);
-	threshold(dist_img, dist_img, 10, 255, THRESH_BINARY);
+	
 
-	resize(dist_img, dist_img, Size(1000, 1000));
-	//normalize(dist_img, dist_img, 0.0, 1, NORM_MINMAX);
-	imshow("dist", dist_img);
-	*/
 	
 	string infilePath = "data/dom1l-fp_32359_5654_2010_nw.xyz";
 	string outfilePath = "data/RausWolke.xyz";
@@ -70,6 +63,7 @@ GANZZAHL HAUPT(GANZZAHL argc, KOHLE **argv) {
 
 	Mat binary2(img.size(), CV_8U, Scalar(0));
 
+	cout << "Fuck off" << endl;
 	for (XYZ_Point p : pc) {
 		if (binary_h_img.at<uchar>(9999.99 - p.y, p.x) > 0 && p.z > 500) {
 			labelsOnly.push_back('0');		// vegetation
@@ -81,13 +75,94 @@ GANZZAHL HAUPT(GANZZAHL argc, KOHLE **argv) {
 			remains.push_back(p);
 		}
 	}
+	cout << "Fuck off" << endl;
 
+	Mat dist_img;
+	resize(binary_h_img, binary_h_img, Size(1000, 1000));
+	distanceTransform(binary_h_img, dist_img, CV_DIST_L2, 3);
+	//threshold(dist_img, dist_img, 10, 255, THRESH_BINARY);
+
+	//resize(dist_img, dist_img, Size(1000, 1000));
+	normalize(dist_img, dist_img, 0.0, 1, NORM_MINMAX);
+	imshow("dist", dist_img);
+
+	Mat max_img;
+	nonMaximaSuppression(dist_img, 50, max_img, Mat());
+	imshow("maaxs", max_img);
+
+	//waitKey();
+
+
+	
 	morphologyEx(binary2, binary2, MORPH_CLOSE, getStructuringElement(MORPH_ELLIPSE, Size(10, 10)), Point(-1,-1), 2);
-
-	//Mat markers(markerMask.size(), CV_32S, Scalar::all(0));
-	//watershed(img0, markers);
-
+	Mat dist_img2;
 	resize(binary2, binary2, Size(1000, 1000));
+	distanceTransform(binary2, dist_img2, CV_DIST_L2, 3);
+	normalize(dist_img2, dist_img2, 0.0, 1, NORM_MINMAX);
+	Mat nms_img;
+	nonMaximaSuppression(dist_img, 50, nms_img, Mat());
+	morphologyEx(nms_img, nms_img, MORPH_DILATE, getStructuringElement(MORPH_ELLIPSE, Size(10, 10)));
+	//vector<vector<Point>> contours3;
+	//vector<Vec4i> hierarchy3;
+	//findContours(nms_img.clone(), contours3, hierarchy3, RETR_CCOMP, CHAIN_APPROX_SIMPLE);
+	//int compCount3 = contours3.size();
+
+
+
+	imshow("BEST!", nms_img);
+	
+
+
+	resize(img, img, Size(1000, 1000));
+	//max_img.convertTo(max_img, CV_32S);
+	//int compCount = countNonZero(max_img);
+	resize(nms_img, nms_img, Size(1000, 1000));
+	vector<vector<Point>> contours2;
+	vector<Vec4i> hierarchy2;
+	cout << "a" << endl;
+	findContours(nms_img.clone(), contours2, hierarchy2, RETR_CCOMP, CHAIN_APPROX_SIMPLE);
+	int compCount = contours2.size();
+	cout << max_img.size() << endl;
+	cout << compCount << endl;
+	nms_img.convertTo(nms_img, CV_32S);
+	//watershed(img, max_img);
+	cout << "b" << endl;
+	//watershed(img, nms_img);
+	cvtColor(binary2, binary2, CV_GRAY2BGR);
+	imshow("BEST!!!", binary2);
+	watershed(img, nms_img);
+
+	vector<Vec3b> colorTab;
+	for (int i = 0; i < compCount; i++)
+	{
+		int b = theRNG().uniform(0, 255);
+		int g = theRNG().uniform(0, 255);
+		int r = theRNG().uniform(0, 255);
+		colorTab.push_back(Vec3b((uchar)b, (uchar)g, (uchar)r));
+	}
+
+	Mat wshed(max_img.size(), CV_8UC3);
+	cout << compCount << endl;
+	// paint the watershed image
+	for (int i = 0; i < max_img.rows; i++)
+		for (int j = 0; j < max_img.cols; j++)
+		{
+			//int index = max_img.at<int>(i, j);
+			int index = nms_img.at<int>(i, j);
+			if (index == -1)
+				wshed.at<Vec3b>(i, j) = Vec3b(255, 255, 255);
+			else if (index <= 0 || index > compCount)
+				wshed.at<Vec3b>(i, j) = Vec3b(0, 0, 0);
+			else
+				wshed.at<Vec3b>(i, j) = colorTab[index - 1];
+		}
+
+	imshow("watershed transform", wshed);
+
+	cout << "ya" << endl;
+	imshow("maaaxx", max_img);
+
+	//resize(binary2, binary2, Size(1000, 1000));
 	imshow("new bin", binary2);
 	waitKey();
 
